@@ -113,27 +113,74 @@ h1 {
 
 .video-container {
   width: 100%;
+  background-color: #000;
 }
 
 .video-title {
   margin: 0 0 1em;
+  padding: 0.5em;
   font-size: 1.5em;
+  color: #fff;
 }
 
 .video-player {
-  min-width: 320px;
+  display: block;
   min-height: 240px;
-  background-color: #000;
+  margin: 0 auto;
 }
 
-.form-seek {
-  margin-top: 1em;
+.video-time {
+  background-color: #000;
+  color: #fff;
+  padding: 0.25em 0.5em;
+  text-align: right;
+}
+
+.video-controls-form {
+  display: block;
+  width: 100%;
 }
 
 .input-seek-scrubber {
   display: block;
-  width: 36em;
-  margin-top: 1em;
+  width: calc(100% - 1em);
+  margin: 0.5em auto 1em;
+}
+
+.video-button-group {
+  display: flex;
+  padding: 0 0.5em 0.5em;
+}
+
+.video-button-group .btn {
+  border-radius: 4px;
+}
+
+.video-button-group .btn + .btn {
+  margin-left: 1em;
+}
+
+.video-controls {
+  display: flex;
+}
+
+.btn-stream.active {
+  background-color: #0063e5;
+  color: #fff;
+}
+
+.input-seek-manual-container {
+  margin-left: 1em;
+}
+
+.input-seek-manual {
+  font-size: 1em;
+  width: 4em;
+  height: 35px;
+  padding-right: 0.5em;
+  border: none;
+  border-radius: 4px;
+  text-align: right;
 }
 
 .log-container {

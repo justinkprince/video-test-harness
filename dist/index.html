@@ -34,27 +34,7 @@
           <div class="video-time"></div>
 
           <nav class="video-controls">
-            <button type="button" class="btn btn-rewind control" disabled>
-              Back
-            </button>
-            <button type="button" class="btn btn-play-pause control" disabled>
-              Play
-            </button>
-            <button type="button" class="btn btn-fast-forward control" disabled>
-              Forward
-            </button>
-
-            <form class="form-seek">
-              <label>
-                Jump to:
-                <input
-                  class="input-seek-manual control"
-                  type="number"
-                  value="0"
-                  disabled
-                />
-                <input type="submit" value="Go" class="control" disabled />
-              </label>
+            <form class="video-controls-form">
               <input
                 class="input-seek-scrubber control"
                 type="range"
@@ -62,6 +42,28 @@
                 step="1"
                 disabled
               />
+
+              <div class="video-button-group">
+                <button type="button" class="btn btn-rewind control" disabled>
+                  Back
+                </button>
+                <button type="button" class="btn btn-play-pause control" disabled>
+                  Play
+                </button>
+                <button type="button" class="btn btn-fast-forward control" disabled>
+                  Forward
+                </button>
+
+                <label class="input-seek-manual-container">
+                  <input
+                    class="input-seek-manual control"
+                    type="number"
+                    value="0"
+                    disabled
+                  />
+                  <input type="submit" value="Go" class="btn control" disabled />
+                </label>
+              </div>
             </form>
           </nav>
         </div>
