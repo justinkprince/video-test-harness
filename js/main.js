@@ -6,7 +6,7 @@ import PlayerNavigation from './player-navigation.js';
 const logger = new Logger();
 
 const videoContainer = document.getElementById('video-container');
-const videoPlayer = videoContainer.getElementById('video-player');
+const videoPlayer = document.getElementById('video-player');
 
 // Offload much of the video player logic to its own module.
 const player = new Player({ videoElement: videoPlayer });
