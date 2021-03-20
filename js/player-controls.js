@@ -41,7 +41,7 @@ class PlayerControls {
     this.playPauseBtn = container.querySelector('.btn-play-pause');
     this.fastForwardBtn = container.querySelector('.btn-fast-forward');
     this.rewindBtn = container.querySelector('.btn-rewind');
-    this.seekForm = container.querySelector('.form-seek');
+    this.seekForm = container.querySelector('.video-controls-form');
     this.seekManualInput = container.querySelector('.input-seek-manual');
     this.seekScrubberInput = container.querySelector('.input-seek-scrubber');
     this.displayTime = container.querySelector('.video-time');
@@ -77,6 +77,10 @@ class PlayerControls {
     this.seekForm.addEventListener('submit', (e) => {
       e.preventDefault();
       this.player.seek(this.seekManualInput.value);
+    });
+
+    this.seekManualInput.addEventListener('click', (e) => {
+      this.seekManualInput.select();
     });
 
     // The scrubber acts as a secondary seek control.

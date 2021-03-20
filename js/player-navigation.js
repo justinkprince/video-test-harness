@@ -21,13 +21,27 @@ class PlayerNavigation {
    * @param {string} obj.label The button text.
    * @param {callback} obj.handleClick Event handler for the button.
    */
-  addStreamButton({ label, handleClick }) {
+  addStreamButton({ label, handleClick, isActive = false }) {
     const button = document.createElement('button');
     button.classList.add('btn', 'btn-stream');
     button.innerText = label;
-    button.addEventListener('click', handleClick);
+    button.addEventListener('click', () => {
+      this.deactivateAllButtons();
+      handleClick();
+      button.classList.add('active');
+    });
+
+    if (isActive) {
+      button.classList.add('active');
+    }
 
     this.navContainer.appendChild(button);
+  }
+
+  deactivateAllButtons() {
+    this.navContainer.querySelectorAll('.btn-stream').forEach((button) => {
+      button.classList.remove('active');
+    });
   }
 
   /**

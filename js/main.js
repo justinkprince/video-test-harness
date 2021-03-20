@@ -28,7 +28,7 @@ fetch(testStreamsManifestUrl)
     // Clear the "loading" text.
     playerNav.clear();
 
-    data.streams.forEach((stream) => {
+    data.streams.forEach((stream, index) => {
       // For each stream, create a button that loads the corresponding video
       // into the player.
       playerNav.addStreamButton({
@@ -38,6 +38,13 @@ fetch(testStreamsManifestUrl)
           videoContainer.querySelector('.video-title').innerText = stream.title;
           controls.setEnabled(true);
         },
+        isActive: (index === 0),
       });
+
+      if (index === 0) {
+        player.load(stream.url);
+        controls.setEnabled(true);
+        videoContainer.querySelector('.video-title').innerText = stream.title;
+      }
     });
   });
