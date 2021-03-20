@@ -17,7 +17,7 @@ const getTimestamp = () => {
 
 const wrapWithDiv = (input, className = null) => {
   const wrapper = document.createElement('div');
-  wrapper.textContent = `${getTimestamp()} - ${input.toString()}`;
+  wrapper.textContent = input.toString();
 
   if (className) {
     wrapper.classList.add(className);
