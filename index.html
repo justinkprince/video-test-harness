@@ -8,6 +8,10 @@
       href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./css/main.css" />
   </head>
 
@@ -31,7 +35,9 @@
 
           <video id="video-player" class="video-player"></video>
 
-          <div class="video-time"></div>
+          <div class="video-extras">
+            <div id="video-time"></div>
+          </div>
 
           <nav class="video-controls">
             <form class="video-controls-form">
@@ -45,13 +51,14 @@
 
               <div class="video-button-group">
                 <button type="button" class="btn btn-rewind control" disabled>
-                  Back
+                  <span class="material-icons">fast_rewind</span>
                 </button>
                 <button type="button" class="btn btn-play-pause control" disabled>
-                  Play
+                  <span class="material-icons play">play_arrow</span>
+                  <span class="material-icons pause">pause</span>
                 </button>
                 <button type="button" class="btn btn-fast-forward control" disabled>
-                  Forward
+                  <span class="material-icons">fast_forward</span>
                 </button>
 
                 <label class="input-seek-manual-container">
@@ -61,7 +68,7 @@
                     value="0"
                     disabled
                   />
-                  <input type="submit" value="Go" class="btn control" disabled />
+                  <button type="submit" class="btn btn-go control" disabled>go</button>
                 </label>
               </div>
             </form>
