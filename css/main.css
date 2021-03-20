@@ -1,0 +1,148 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #f0f0f0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+  font-size: 1rem;
+}
+
+.page-header {
+  display: flex;
+  background-color: #0063e5;
+  color: #fff;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0.75em 1em;
+}
+
+.page-header .brand {
+  font-size: 1.5em;
+  color: #f0f0f0;
+}
+
+.page-header .version {
+  font-size: 1em;
+}
+
+.container {
+  max-width: 80em;
+  min-height: 10em;
+  margin: 1em auto;
+  padding: 1.5em;
+  background-color: #fff;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: 14em auto;
+  grid-template-rows: 1fr 1fr;
+  row-gap: 2em;
+  column-gap: 2em;
+}
+
+.log-container {
+  grid-row-start: 2;
+  grid-column: 1/-1;
+}
+
+.btn {
+  background-color: #eee;
+  border: none;
+  padding: 0.75em 1em;
+  cursor: pointer;
+}
+
+.nav-main {
+  display: flex;
+  max-width: 80em;
+  margin: 1em auto 1em;
+  padding: 1em;
+  background-color: #fff;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.nav-main .btn-nav {
+  display: block;
+  margin-right: 0.75em;
+  background-color: #0063e5;
+  color: #fff;
+  border-radius: 3px;
+}
+
+.nav-main .btn-nav:hover {
+  background-color: #ffa805;
+}
+
+.nav-streams {
+  grid-column: 1/1;
+}
+
+.nav-streams .btn {
+  display: block;
+  margin-bottom: 1em;
+  border: 1px solid #999;
+  width: 100%;
+}
+
+.video-container {
+  width: 100%;
+}
+
+.video-title {
+  margin: 0 0 1em;
+  font-size: 1.5em;
+}
+
+.video-player {
+  min-width: 320px;
+  min-height: 240px;
+  background-color: #000;
+}
+
+.form-seek {
+  margin-top: 1em;
+}
+
+.input-seek-scrubber {
+  display: block;
+  width: 36em;
+  margin-top: 1em;
+}
+
+.log-container {
+  background-color: #000;
+  color: #eee;
+  font-family: monospace;
+  padding: 5px;
+}
+
+.log-container h2 {
+  margin: 0 0em;
+  padding: 0.25em;
+  border: 1px solid #ccc;
+}
+
+.log-container .log {
+  white-space: pre;
+  line-height: 1.5em;
+  padding: 0.25em;
+  font-size: 1em;
+}
+
+.log-container .log .error {
+  color: red;
+}

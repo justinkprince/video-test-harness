@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Video Test Harness</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/main.css" />
+  </head>
+
+  <body>
+    <header class="page-header">
+      <div class="brand">Video Test Harness</div>
+      <div class="version">v0.1.0</div>
+    </header>
+
+    <main>
+      <div class="container">
+        <nav id="nav-streams" class="nav-streams">Loading test stream data</nav>
+
+        <div id="video-container" class="video-container">
+          <h4 class="video-title">Please select stream</h4>
+
+          <video id="video-player" class="video-player"></video>
+
+          <div class="video-time"></div>
+
+          <nav class="video-controls">
+            <button type="button" class="btn btn-rewind control" disabled>
+              Back
+            </button>
+            <button type="button" class="btn btn-play-pause control" disabled>
+              Play
+            </button>
+            <button type="button" class="btn btn-fast-forward control" disabled>
+              Forward
+            </button>
+
+            <form class="form-seek">
+              <label>
+                Jump to:
+                <input
+                  class="input-seek-manual control"
+                  type="number"
+                  value="0"
+                  disabled
+                />
+                <input type="submit" value="Go" class="control" disabled />
+              </label>
+              <input
+                class="input-seek-scrubber control"
+                type="range"
+                value="0"
+                step="1"
+                disabled
+              />
+            </form>
+          </nav>
+        </div>
+
+        <div class="log-container">
+          <h2>Log</h2>
+          <div id="log" class="log"></div>
+        </div>
+      </div>
+    </main>
+
+    <script type="module" src="/js/main.js"></script>
+  </body>
+</html>
