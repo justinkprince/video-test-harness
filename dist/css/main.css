@@ -36,8 +36,21 @@ h1 {
   color: #f0f0f0;
 }
 
-.page-header .version {
+.page-header .supplemental {
   font-size: 1em;
+}
+
+.page-header .github-repo {
+  text-decoration: none;
+}
+
+.page-header .github-repo:hover {
+  text-decoration: underline;
+}
+
+.page-header .version {
+  padding-bottom: 0.5em;
+  text-align: right;
 }
 
 .container {
@@ -145,4 +158,8 @@ h1 {
 
 .log-container .log .error {
   color: red;
+}
+
+.github-repo {
+  color: #fff;
 }

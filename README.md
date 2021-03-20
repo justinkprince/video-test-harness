@@ -2,6 +2,8 @@
 
 A simple test harness for our HTML5 platform that allows users to play test streams on a video player.
 
+View online at [https://justinkprince.github.io/video-test-harness/](https://justinkprince.github.io/video-test-harness/)
+
 ## Requirements
 
 This project relies upon newer features of JavaScript and therefore it must be run in either Chrome v63+ (recommended) or Firefox v67+ to be safe.
