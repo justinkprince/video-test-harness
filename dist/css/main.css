@@ -129,11 +129,21 @@ h1 {
   margin: 0 auto;
 }
 
-.video-time {
+.video-extras {
   background-color: #000;
   color: #fff;
   padding: 0.25em 0.5em;
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.video-extras .btn {
+  background-color: transparent;
+  color: #fff;
+  padding: 0;
+  margin-right: 1em;
+  margin-top: 0.25em;
 }
 
 .video-controls-form {
@@ -154,10 +164,33 @@ h1 {
 
 .video-button-group .btn {
   border-radius: 4px;
+  padding: 4px 1em 0;
 }
 
 .video-button-group .btn + .btn {
   margin-left: 1em;
+}
+
+.btn-play-pause .pause {
+  display: none;
+}
+
+.btn-play-pause .play {
+  display: inline-block;
+}
+
+.btn-play-pause.playing .pause {
+  display: inline-block;
+}
+
+.btn-play-pause.playing .play {
+  display: none;
+}
+
+.video-button-group .btn-go {
+  padding: 9px 0.5em;
+  font-size: 1em;
+  font-weight: 700;
 }
 
 .video-controls {
@@ -180,7 +213,7 @@ h1 {
   padding-right: 0.5em;
   border: none;
   border-radius: 4px;
-  text-align: right;
+  text-align: center;
 }
 
 .log-container {

@@ -44,7 +44,7 @@ class PlayerControls {
     this.seekForm = container.querySelector('.video-controls-form');
     this.seekManualInput = container.querySelector('.input-seek-manual');
     this.seekScrubberInput = container.querySelector('.input-seek-scrubber');
-    this.displayTime = container.querySelector('.video-time');
+    this.displayTime = document.getElementById('video-time');
   }
 
   /**
@@ -102,9 +102,9 @@ class PlayerControls {
   addObservers() {
     this.player.observe('*', (e) => {
       if (this.player.playing) {
-        this.playPauseBtn.innerText = 'Pause';
+        this.playPauseBtn.classList.add('playing');
       } else {
-        this.playPauseBtn.innerText = 'Play';
+        this.playPauseBtn.classList.remove('playing');
       }
     });
   }
