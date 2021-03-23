@@ -11,7 +11,7 @@ class PlayerNavigation {
    * This container is just a wrapper to simply hold buttons.
    */
   selectElements() {
-    this.navContainer = document.getElementById('nav-streams');
+    this.navContainer = document.getElementById("nav-streams");
   }
 
   /**
@@ -22,25 +22,25 @@ class PlayerNavigation {
    * @param {callback} obj.handleClick Event handler for the button.
    */
   addStreamButton({ label, handleClick, isActive = false }) {
-    const button = document.createElement('button');
-    button.classList.add('btn', 'btn-stream');
+    const button = document.createElement("button");
+    button.classList.add("btn", "btn-stream");
     button.innerText = label;
-    button.addEventListener('click', () => {
+    button.addEventListener("click", () => {
       this.deactivateAllButtons();
       handleClick();
-      button.classList.add('active');
+      button.classList.add("active");
     });
 
     if (isActive) {
-      button.classList.add('active');
+      button.classList.add("active");
     }
 
     this.navContainer.appendChild(button);
   }
 
   deactivateAllButtons() {
-    this.navContainer.querySelectorAll('.btn-stream').forEach((button) => {
-      button.classList.remove('active');
+    this.navContainer.querySelectorAll(".btn-stream").forEach((button) => {
+      button.classList.remove("active");
     });
   }
 
@@ -48,7 +48,7 @@ class PlayerNavigation {
    * Clear out all content from the container.
    */
   clear() {
-    this.navContainer.innerHTML = '';
+    this.navContainer.innerHTML = "";
   }
 }
 
