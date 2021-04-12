@@ -1,6 +1,6 @@
 # Video test harness
 
-A simple test harness for our HTML5 platform that allows users to play test streams on a video player.
+A simple test harness for an HTML5 platform that allows users to play test streams on a video player.
 
 View online at [https://justinkprince.github.io/video-test-harness/](https://justinkprince.github.io/video-test-harness/)
 
