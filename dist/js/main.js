@@ -1,15 +1,15 @@
-import Logger from './logger.js';
-import Player from './player.js';
-import PlayerControls from './player-controls.js';
-import PlayerNavigation from './player-navigation.js';
+import Logger from "./logger.js";
+import Player from "./player.js";
+import PlayerControls from "./player-controls.js";
+import PlayerNavigation from "./player-navigation.js";
 
 const logger = new Logger();
 
-const videoContainer = document.getElementById('video-container');
-const videoPlayer = document.getElementById('video-player');
+const videoContainer = document.getElementById("video-container");
+const videoElement = document.getElementById("video-player");
 
 // Offload much of the video player logic to its own module.
-const player = new Player({ videoElement: videoPlayer });
+const player = new Player(videoElement);
 
 // Same with the controls logic.
 const controls = new PlayerControls(player, videoContainer);
@@ -18,13 +18,13 @@ const controls = new PlayerControls(player, videoContainer);
 const playerNav = new PlayerNavigation();
 
 const testStreamsManifestUrl =
-  'https://vpe-static.bamgrid.com/sample-files/take-home-exam/test-streams.json';
+  "https://vpe-static.bamgrid.com/sample-files/take-home-exam/test-streams.json";
 
 // Fetch the test stream manifest.
 fetch(testStreamsManifestUrl)
   .then((response) => response.json())
   .then((data) => {
-    logger.log('Test stream response received');
+    logger.log("Test stream response received");
     // Clear the "loading" text.
     playerNav.clear();
 
@@ -35,16 +35,16 @@ fetch(testStreamsManifestUrl)
         label: stream.title,
         handleClick: () => {
           player.load(stream.url);
-          videoContainer.querySelector('.video-title').innerText = stream.title;
+          videoContainer.querySelector(".video-title").innerText = stream.title;
           controls.setEnabled(true);
         },
-        isActive: (index === 0),
+        isActive: index === 0,
       });
 
       if (index === 0) {
         player.load(stream.url);
         controls.setEnabled(true);
-        videoContainer.querySelector('.video-title').innerText = stream.title;
+        videoContainer.querySelector(".video-title").innerText = stream.title;
       }
     });
   });
