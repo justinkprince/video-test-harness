@@ -100,7 +100,7 @@ class PlayerControls {
    * Update the play/pause button display on any state changes.
    */
   addObservers() {
-    this.player.observe("*", (e) => {
+    this.player.addObserver("*", () => {
       if (this.player.playing) {
         this.playPauseBtn.classList.add("playing");
       } else {
