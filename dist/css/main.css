@@ -167,7 +167,7 @@ h1 {
   padding: 4px 1em 0;
 }
 
-.video-button-group .btn + .btn {
+.video-button-group .btn+.btn {
   margin-left: 1em;
 }
 

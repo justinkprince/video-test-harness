@@ -1,4 +1,4 @@
-import Logger from './logger.js';
+import Logger from "./logger.js";
 
 const logger = new Logger();
 
@@ -9,34 +9,34 @@ const logger = new Logger();
  */
 const PlayerException = function (message) {
   this.message = message;
-  this.name = 'PlayerException';
+  this.name = "PlayerException";
 };
 
 /**
  * Nearly all the states the player could be in.
  */
 export const PLAYER_STATE = {
-  PLAYING: 'playing',
-  PAUSED: 'paused',
-  STOPPED: 'stopped',
-  FAST_FORWARD: 'fast_forward',
-  REWIND: 'rewind',
+  PLAYING: "playing",
+  PAUSED: "paused",
+  STOPPED: "stopped",
+  FAST_FORWARD: "fast_forward",
+  REWIND: "rewind",
 };
 
 /**
  * Events which can be observed and reacted upon.
  */
 export const PLAYER_EVENT = {
-  READY: 'ready',
-  ERROR: 'error',
-  COMPLETE: 'complete',
-  MUTE: 'mute',
-  PLAY: 'play',
-  PAUSE: 'pause',
-  STOP: 'stop',
-  FAST_FORWARD: 'fast_forward',
-  REWIND: 'rewind',
-  SEEK: 'seek',
+  READY: "ready",
+  ERROR: "error",
+  COMPLETE: "complete",
+  MUTE: "mute",
+  PLAY: "play",
+  PAUSE: "pause",
+  STOP: "stop",
+  FAST_FORWARD: "fast_forward",
+  REWIND: "rewind",
+  SEEK: "seek",
 };
 
 /** Wrapper over the native HTMLVideoElement, providing a few convenience methods. */
@@ -64,7 +64,7 @@ class Player {
 
     if (videoElement) {
       if (!(videoElement instanceof HTMLVideoElement)) {
-        throw new PlayerException('Invalid video element.');
+        throw new PlayerException("Invalid video element.");
       }
 
       this.media = videoElement;
@@ -72,13 +72,13 @@ class Player {
       const el = document.getElementById(videoElementId);
 
       if (!el) {
-        throw new PlayerException('Invalid video element ID.');
+        throw new PlayerException("Invalid video element ID.");
       }
 
       this.media = el;
     } else {
       throw new PlayerException(
-        'A valid video element or video element ID is required.',
+        "A valid video element or video element ID is required."
       );
     }
 
@@ -106,7 +106,7 @@ class Player {
    */
   get seeking() {
     return [PLAYER_STATE.FAST_FORWARD, PLAYER_STATE.REWIND].includes(
-      this.state,
+      this.state
     );
   }
 
@@ -142,8 +142,8 @@ class Player {
       this.observers[event].forEach((callback) => callback(event));
     }
 
-    if ('*' in this.observers) {
-      this.observers['*'].forEach((callback) => callback(event));
+    if ("*" in this.observers) {
+      this.observers["*"].forEach((callback) => callback(event));
     }
   }
 
@@ -151,7 +151,7 @@ class Player {
    * Play the video, update the state, and broadcast the event.
    */
   play() {
-    logger.log('NativePlayer.play()');
+    logger.log("NativePlayer.play()");
     clearInterval(this.interval);
     this.media.play();
     this.state = PLAYER_STATE.PLAYING;
@@ -162,7 +162,7 @@ class Player {
    * Pause the video, update the state, and broadcast the event.
    */
   pause() {
-    logger.log('NativePlayer.pause()');
+    logger.log("NativePlayer.pause()");
     clearInterval(this.interval);
     this.media.pause();
     this.state = PLAYER_STATE.PAUSED;
@@ -173,7 +173,7 @@ class Player {
    * Stop the video, reset the head, update the state, and broadcast the event.
    */
   stop() {
-    logger.log('NativePlayer.play()');
+    logger.log("NativePlayer.play()");
     clearInterval(this.interval);
     this.media.pause();
     this.media.currentTime = 0;
@@ -186,7 +186,7 @@ class Player {
    * moves the head forward incrementally.
    */
   fastForward() {
-    logger.log('NativePlayer.fastForward()');
+    logger.log("NativePlayer.fastForward()");
     clearInterval(this.interval);
 
     if (this.state === PLAYER_STATE.FAST_FORWARD) {
@@ -220,7 +220,7 @@ class Player {
    * moves the head backward incrementally.
    */
   rewind() {
-    logger.log('NativePlayer.rewind()');
+    logger.log("NativePlayer.rewind()");
     clearInterval(this.interval);
 
     if (this.state === PLAYER_STATE.REWIND) {

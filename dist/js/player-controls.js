@@ -1,4 +1,4 @@
-import { convertSecondsToMinutes } from './utils.js';
+import { convertSecondsToMinutes } from "./utils.js";
 
 /** Provides all the interactivity for the Player */
 class PlayerControls {
@@ -26,7 +26,7 @@ class PlayerControls {
    * @param {boolean} isEnabled Add or remove `disabled` attribute from form elements.
    */
   setEnabled(isEnabled) {
-    this.container.querySelectorAll('.control').forEach((control) => {
+    this.container.querySelectorAll(".control").forEach((control) => {
       control.disabled = !isEnabled;
     });
   }
@@ -38,20 +38,20 @@ class PlayerControls {
   selectElements() {
     const container = this.container;
 
-    this.playPauseBtn = container.querySelector('.btn-play-pause');
-    this.fastForwardBtn = container.querySelector('.btn-fast-forward');
-    this.rewindBtn = container.querySelector('.btn-rewind');
-    this.seekForm = container.querySelector('.video-controls-form');
-    this.seekManualInput = container.querySelector('.input-seek-manual');
-    this.seekScrubberInput = container.querySelector('.input-seek-scrubber');
-    this.displayTime = document.getElementById('video-time');
+    this.playPauseBtn = container.querySelector(".btn-play-pause");
+    this.fastForwardBtn = container.querySelector(".btn-fast-forward");
+    this.rewindBtn = container.querySelector(".btn-rewind");
+    this.seekForm = container.querySelector(".video-controls-form");
+    this.seekManualInput = container.querySelector(".input-seek-manual");
+    this.seekScrubberInput = container.querySelector(".input-seek-scrubber");
+    this.displayTime = document.getElementById("video-time");
   }
 
   /**
    * For the main control buttons, add event handlers that utilize the Player's API.
    */
   addButtonEvents() {
-    this.playPauseBtn.addEventListener('click', () => {
+    this.playPauseBtn.addEventListener("click", () => {
       if (this.player.playing) {
         this.player.pause();
       } else {
@@ -59,11 +59,11 @@ class PlayerControls {
       }
     });
 
-    this.fastForwardBtn.addEventListener('click', () => {
+    this.fastForwardBtn.addEventListener("click", () => {
       this.player.fastForward();
     });
 
-    this.rewindBtn.addEventListener('click', () => {
+    this.rewindBtn.addEventListener("click", () => {
       this.player.rewind();
     });
   }
@@ -74,22 +74,22 @@ class PlayerControls {
   addSeekEvents() {
     // A form wraps the manual seek input field so that onEnter events
     // trigger this event handler out of convenience.
-    this.seekForm.addEventListener('submit', (e) => {
+    this.seekForm.addEventListener("submit", (e) => {
       e.preventDefault();
       this.player.seek(this.seekManualInput.value);
     });
 
-    this.seekManualInput.addEventListener('click', (e) => {
+    this.seekManualInput.addEventListener("click", (e) => {
       this.seekManualInput.select();
     });
 
     // The scrubber acts as a secondary seek control.
-    this.seekScrubberInput.addEventListener('change', (e) => {
+    this.seekScrubberInput.addEventListener("change", (e) => {
       this.player.seek(e.target.value);
     });
 
     // Prevent seeking beyond the duration of the video content.
-    this.player.media.addEventListener('durationchange', (e) => {
+    this.player.media.addEventListener("durationchange", (e) => {
       const duration = Math.floor(e.target.duration);
       this.seekManualInput.max = duration;
       this.seekScrubberInput.max = duration;
@@ -100,11 +100,11 @@ class PlayerControls {
    * Update the play/pause button display on any state changes.
    */
   addObservers() {
-    this.player.observe('*', (e) => {
+    this.player.observe("*", (e) => {
       if (this.player.playing) {
-        this.playPauseBtn.classList.add('playing');
+        this.playPauseBtn.classList.add("playing");
       } else {
-        this.playPauseBtn.classList.remove('playing');
+        this.playPauseBtn.classList.remove("playing");
       }
     });
   }
@@ -132,7 +132,7 @@ class PlayerControls {
    */
   getDisplayTime() {
     const media = this.player.media;
-    let time = '00:00 / 00:00';
+    let time = "00:00 / 00:00";
     let duration = !Number.isNaN(media.duration) ? media.duration : null;
 
     if (duration) {
