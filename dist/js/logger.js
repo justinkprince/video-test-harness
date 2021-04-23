@@ -1,7 +1,7 @@
-import { getTimestamp, wrapWithDiv } from "./utils.js";
+import { getTimestamp, wrapWithElement } from "./utils.js";
 
 const prepareInput = (input, className = null) => {
-  return wrapWithDiv(`${getTimestamp()} - ${input}`, className);
+  return wrapWithElement(`${getTimestamp()} - ${input}`, { className });
 };
 
 const Logger = function () {

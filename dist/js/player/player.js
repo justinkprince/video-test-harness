@@ -1,46 +1,39 @@
-import Logger from "./logger.js";
-
-const logger = new Logger();
-
-/**
- * Exception handling.
- *
- * @param {string} message A human-friendly error message.
- */
-const PlayerException = function (message) {
-  this.message = message;
-  this.name = "PlayerException";
-};
-
-/**
- * Nearly all the states the player could be in.
- */
-export const PLAYER_STATE = {
-  PLAYING: "playing",
-  PAUSED: "paused",
-  STOPPED: "stopped",
-  FAST_FORWARD: "fast_forward",
-  REWIND: "rewind",
-};
-
-/**
- * Events which can be observed and reacted upon.
- */
-export const PLAYER_EVENT = {
-  READY: "ready",
-  ERROR: "error",
-  COMPLETE: "complete",
-  MUTE: "mute",
-  PLAY: "play",
-  PAUSE: "pause",
-  STOP: "stop",
-  FAST_FORWARD: "fast_forward",
-  REWIND: "rewind",
-  SEEK: "seek",
-};
+import PlayerException from "./player-exception.js";
 
 /** Wrapper over the native HTMLVideoElement, providing a few convenience methods. */
 class Player {
+  static get EVENTS() {
+    return {
+      READY: "ready",
+      ERROR: "error",
+      COMPLETE: "complete",
+      MUTE: "mute",
+      PLAY: "play",
+      PAUSE: "pause",
+      STOP: "stop",
+      FAST_FORWARD: "fast_forward",
+      REWIND: "rewind",
+      SEEK: "seek",
+    };
+  }
+
+  static get STATES() {
+    return {
+      PLAYING: "playing",
+      PAUSED: "paused",
+      STOPPED: "stopped",
+      FAST_FORWARD: "fast_forward",
+      REWIND: "rewind",
+    };
+  }
+
+  static get STEP_DIRECTION() {
+    return {
+      FORWARD: "FORWARD",
+      BACKWARD: "BACKWARD",
+    };
+  }
+
   /**
    * Bootstrap the Player.
    *
@@ -48,14 +41,16 @@ class Player {
    * @param {Object} options Allows for named arguments via destructuring.
    * @param {number} options.seekStepSeconds How many seconds to skip forward during seek operations.
    */
-  constructor(videoElement, { seekStepSeconds = 2 } = {}) {
+  constructor(videoElement, { seekStepSeconds = 2, logger = null } = {}) {
     if (!(videoElement instanceof HTMLVideoElement)) {
       throw new PlayerException("Invalid video element.");
     }
 
+    this.logger = logger ?? { log: () => {} };
+
     this.media = videoElement;
 
-    this.state = PLAYER_STATE.STOPPED;
+    this.state = Player.STATES.STOPPED;
     this.seekStepSeconds = seekStepSeconds;
 
     this.observers = {};
@@ -73,14 +68,14 @@ class Player {
    * Using a custom playing property so it's sure to be in sync with internal state.
    */
   get playing() {
-    return this.state === PLAYER_STATE.PLAYING;
+    return this.state === Player.STATES.PLAYING;
   }
 
   /**
    * "seeking" state is TRUE if the player is either fast forwarding or rewinding.
    */
   get seeking() {
-    return [PLAYER_STATE.FAST_FORWARD, PLAYER_STATE.REWIND].includes(
+    return [Player.STATES.FAST_FORWARD, Player.STATES.REWIND].includes(
       this.state
     );
   }
@@ -89,7 +84,8 @@ class Player {
    * @param {string} url A video URL to play.
    */
   load(url) {
-    logger.log(`Player.load(${url})`);
+    this.stop();
+    this.logger.log(`Player.load(${url})`);
     this.media.src = url;
   }
 
@@ -112,7 +108,7 @@ class Player {
    * @param {string} event When an event has been triggered, call each observers' callback.
    */
   notify(event, data = null) {
-    logger.log(`Event '${event}' fired`);
+    this.logger.log(`Event '${event}' fired`);
     if (event in this.observers) {
       this.observers[event].forEach((callback) => callback(event, data));
     }
@@ -126,34 +122,34 @@ class Player {
    * Play the video, update the state, and broadcast the event.
    */
   play() {
-    logger.log("Player.play()");
+    this.logger.log("Player.play()");
     clearInterval(this.seekInterval);
     this.media.play();
-    this.state = PLAYER_STATE.PLAYING;
-    this.notify(PLAYER_EVENT.PLAY);
+    this.state = Player.STATES.PLAYING;
+    this.notify(Player.EVENTS.PLAY);
   }
 
   /**
    * Pause the video, update the state, and broadcast the event.
    */
   pause() {
-    logger.log("Player.pause()");
+    this.logger.log("Player.pause()");
     clearInterval(this.seekInterval);
     this.media.pause();
-    this.state = PLAYER_STATE.PAUSED;
-    this.notify(PLAYER_EVENT.PAUSE);
+    this.state = Player.STATES.PAUSED;
+    this.notify(Player.EVENTS.PAUSE);
   }
 
   /**
    * Stop the video, reset the head, update the state, and broadcast the event.
    */
   stop() {
-    logger.log("Player.stop()");
+    this.logger.log("Player.stop()");
     clearInterval(this.seekInterval);
     this.media.pause();
     this.media.currentTime = 0;
-    this.state = PLAYER_STATE.STOPPED;
-    this.notify(PLAYER_EVENT.STOP);
+    this.state = Player.STATES.STOPPED;
+    this.notify(Player.EVENTS.STOP);
   }
 
   /**
@@ -162,22 +158,23 @@ class Player {
    */
   fastForward() {
     clearInterval(this.seekInterval);
-    this.notify(PLAYER_EVENT.FAST_FORWARD);
 
-    if (this.state === PLAYER_STATE.FAST_FORWARD) {
-      this.state = PLAYER_STATE.PLAYING;
+    if (this.state === Player.STATES.FAST_FORWARD) {
+      this.state = Player.STATES.PLAYING;
       clearInterval(this.seekInterval);
       this.media.play();
-      logger.log(`${PLAYER_EVENT.FAST_FORWARD} on`);
+      this.logger.log(`${Player.EVENTS.FAST_FORWARD} on`);
     } else {
-      this.state = PLAYER_STATE.FAST_FORWARD;
+      this.state = Player.STATES.FAST_FORWARD;
       this.media.pause();
       this.seekInterval = setInterval(
-        this.step.bind(this, STEP_DIRECTION.FORWARD),
+        this.step.bind(this, Player.STEP_DIRECTION.FORWARD),
         500
       );
-      logger.log(`${PLAYER_EVENT.FAST_FORWARD} off`);
+      this.logger.log(`${Player.EVENTS.FAST_FORWARD} off`);
     }
+
+    this.notify(Player.EVENTS.FAST_FORWARD);
   }
 
   /**
@@ -186,35 +183,37 @@ class Player {
    */
   rewind() {
     clearInterval(this.seekInterval);
-    this.notify(PLAYER_EVENT.REWIND);
 
-    if (this.state === PLAYER_STATE.REWIND) {
-      this.state = PLAYER_STATE.PLAYING;
+    if (this.state === Player.STATES.REWIND) {
+      this.state = Player.STATES.PLAYING;
       clearInterval(this.seekInterval);
       this.media.play();
-      logger.log(`${PLAYER_EVENT.REWIND} on`);
+      this.logger.log(`${Player.EVENTS.REWIND} on`);
     } else {
-      this.state = PLAYER_STATE.REWIND;
+      this.state = Player.STATES.REWIND;
       this.media.pause();
       this.seekInterval = setInterval(
-        this.step.bind(this, STEP_DIRECTION.BACKWARD),
+        this.step.bind(this, Player.STEP_DIRECTION.BACKWARD),
         500
       );
-      logger.log(`${PLAYER_EVENT.REWIND} off`);
+      this.logger.log(`${Player.EVENTS.REWIND} off`);
     }
+
+    this.notify(Player.EVENTS.REWIND);
   }
 
   /**
    * Move forward/backward by the set amount of seconds unless the head is at the beginning/end.
    */
   step(direction) {
-    const directionModifier = direction === STEP_DIRECTION.BACKWARD ? -1 : 1;
+    const directionModifier =
+      direction === Player.STEP_DIRECTION.BACKWARD ? -1 : 1;
     const targetTime =
       this.media.currentTime + this.seekStepSeconds * directionModifier;
     const isOutOfBounds = targetTime >= this.media.duration || targetTime <= 0;
 
     if (isOutOfBounds) {
-      this.state = PLAYER_STATE.STOPPED;
+      this.state = Player.STATES.STOPPED;
       clearInterval(this.seekInterval);
       this.stop();
     } else {
@@ -228,17 +227,17 @@ class Player {
    * @param {number} seconds Number of seconds within the playback's duration to jump to.
    */
   seek(seconds) {
-    logger.log(`${PLAYER_EVENT.SEEK} ${seconds} seconds`);
+    this.logger.log(`${Player.EVENTS.SEEK} ${seconds} seconds`);
     clearInterval(this.seekInterval);
 
     if (this.media.duration > seconds) {
       this.media.currentTime = seconds;
-      if (this.state === PLAYER_STATE.PLAYING) {
+      if (this.state === Player.STATES.PLAYING) {
         this.media.play();
       } else {
         this.media.pause();
       }
-      this.notify(PLAYER_EVENT.SEEK);
+      this.notify(Player.EVENTS.SEEK);
     }
   }
 }

@@ -1,4 +1,4 @@
-import { convertSecondsToMinutes } from "./utils.js";
+import { formatDisplayTime } from "../utils.js";
 
 /** Provides all the interactivity for the Player */
 class PlayerControls {
@@ -136,8 +136,8 @@ class PlayerControls {
     let duration = !Number.isNaN(media.duration) ? media.duration : null;
 
     if (duration) {
-      const currentTime = convertSecondsToMinutes(media.currentTime);
-      duration = convertSecondsToMinutes(duration);
+      const currentTime = formatDisplayTime(media.currentTime);
+      duration = formatDisplayTime(duration);
       time = `${currentTime} / ${duration}`;
     }
 

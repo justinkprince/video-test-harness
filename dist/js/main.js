@@ -1,7 +1,7 @@
 import Logger from "./logger.js";
-import Player from "./player.js";
-import PlayerControls from "./player-controls.js";
-import PlayerNavigation from "./player-navigation.js";
+import Player from "./player/player.js";
+import PlayerControls from "./player/player-controls.js";
+import PlayerNavigation from "./player/player-navigation.js";
 
 const logger = new Logger();
 
@@ -9,7 +9,7 @@ const videoContainer = document.getElementById("video-container");
 const videoElement = document.getElementById("video-player");
 
 // Offload much of the video player logic to its own module.
-const player = new Player(videoElement);
+const player = new Player(videoElement, { logger });
 
 // Same with the controls logic.
 const controls = new PlayerControls(player, videoContainer);

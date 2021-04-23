@@ -1,22 +1,22 @@
-const convertSecondsToMinutes = (seconds) => {
+const formatDisplayTime = (seconds) => {
   return new Date(seconds * 1000).toISOString().substr(14, 5);
 };
 
-const padWithZero = (num) => (num < 10 ? "0" : "") + num;
+const padWithLeadingZero = (num) => (num < 10 ? "0" : "") + num;
 
 const getTimestamp = () => {
   const date = new Date();
   const segments = [
     date.getUTCHours(),
-    padWithZero(date.getUTCMinutes()),
-    padWithZero(date.getUTCSeconds()),
+    padWithLeadingZero(date.getUTCMinutes()),
+    padWithLeadingZero(date.getUTCSeconds()),
   ];
 
   return `${segments.join(":")}Z`;
 };
 
-const wrapWithDiv = (input, className = null) => {
-  const wrapper = document.createElement("div");
+const wrapWithElement = (input, { element = "div", className = null }) => {
+  const wrapper = document.createElement(element);
   wrapper.textContent = input.toString();
 
   if (className) {
@@ -26,4 +26,4 @@ const wrapWithDiv = (input, className = null) => {
   return wrapper;
 };
 
-export { convertSecondsToMinutes, padWithZero, getTimestamp, wrapWithDiv };
+export { formatDisplayTime, padWithLeadingZero, getTimestamp, wrapWithElement };
